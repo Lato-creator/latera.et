@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Grade 12 Math Quiz - Unit 5</title>
+<style>
+body { font-family: Arial; text-align: center; }
+.container { max-width: 600px; margin: auto; }
+button { display: block; margin: 10px auto; padding: 10px; width: 60%; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2 id="question">Question will appear here</h2>
+
+  <div id="answers"></div>
+
+  <p id="result"></p>
+  <p id="explanation"></p>
+</div>
+
+<script>
+
+// =======================
+// 50 QUESTIONS (Unit 5 style - Calculus/Functions)
+// =======================
+
+const quiz = [
+{
+q: "Derivative of x^2?",
+options: ["x", "2x", "x^2", "2"],
+answer: "2x",
+exp: "Using power rule: d/dx(x^n) = nx^(n-1)"
+},
+{
+q: "Derivative of 3x?",
+options: ["3", "x", "0", "3x"],
+answer: "3",
+exp: "Derivative of ax is a"
+},
+{
+q: "Integral of 2x?",
+options: ["x^2 + C", "2x + C", "x + C", "x^3"],
+answer: "x^2 + C",
+exp: "Reverse of derivative rule"
+},
+{
+q: "Derivative of constant?",
+options: ["0", "1", "constant", "x"],
+answer: "0",
+exp: "Constants do not change"
+},
+{
+q: "d/dx (x^3)?",
+options: ["3x^2", "x^2", "3x", "x^3"],
+answer: "3x^2",
+exp: "Power rule"
+},
+
+// ---- Continue pattern up to 50 ----
+];
+
+// AUTO-GENERATE remaining questions (simple variations)
+
+for (let i = 6; i <= 50; i++) {
+  quiz.push({
+    q: Derivative of x^${i}?,
+    options: [${i}x^${i-1}, x^${i}, ${i-1}x, 1],
+    answer: ${i}x^${i-1},
+    exp: "Power rule: nx^(n-1)"
+  });
+}
+
+// =======================
+// LOGIC (simple)
+// =======================
+
+let current = 0;
+let score = 0;
+
+function loadQuestion() {
+  let q = quiz[current];
+  document.getElementById("question").innerText = q.q;
+
+  let answersHTML = "";
+  q.options.forEach(opt => {
+    answersHTML += <button onclick="checkAnswer('${opt}')">${opt}</button>;
+  });
+
+  document.getElementById("answers").innerHTML = answersHTML;
+}
+
+function checkAnswer(ans) {
+  let q = quiz[current];
+
+  if (ans === q.answer) {
+    document.getElementById("result").innerText = "Correct!";
+  } else {
+    document.getElementById("result").innerText = "Wrong!";
+  }
+
+  document.getElementById("explanation").innerText = q.exp;
+
+  current++;
+
+  if (current < quiz.length) {
+    setTimeout(loadQuestion, 2000);
+  } else {
+    document.getElementById("question").innerText = "Quiz Finished!";
+  }
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
